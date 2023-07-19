@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setAuthToken, signin } from '../api/auth';
+import { setCurrentUser, signin } from '../api/auth';
 import { SIGNIN_SUCCESS } from '../redux/actions/types';
 
 export const useSignIn = () => {
@@ -12,8 +12,8 @@ export const useSignIn = () => {
     try {
       setLoading(true);
       const data = await signin(body);
-      if (data.token) {
-        setAuthToken(data.token);
+      if (data) {
+        setCurrentUser(data);
         dispatch({
           type: SIGNIN_SUCCESS,
           payload: { user: data },

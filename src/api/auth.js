@@ -4,8 +4,14 @@ import axios from "./axios";
 
 export const setAuthToken = (token) => {
   if (token) {
-    axios.defaults.headers.common["Authorization"] = token;
+    // axios.defaults.headers.common["Authorization"] = token;
   } else delete axios.defaults.headers.common["Authorization"];
+};
+
+export const setCurrentUser = (user) => {
+  if (user) {
+    localStorage.setItem('user', JSON.stringify(user));
+  } else localStorage.setItem('user', '');
 };
 
 export const signin = async (body) => {

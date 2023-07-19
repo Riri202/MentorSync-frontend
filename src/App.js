@@ -7,6 +7,7 @@ import Home from './pages/home';
 import SignIn from './pages/SignIn';
 import Profile from './pages/profile';
 import Session from './pages/session';
+import Booking from './pages/session/Booking';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="signin" element={<SignIn />} />
           <Route path="mentors/:mentorId" element={<Profile />} />
           <Route path="mentors/:mentorId/session" element={<Session />} />
+          <Route path="mentors/:mentorId/session/schedule" element={<Booking />} />
         </Routes>
       </Router>
     </div>
