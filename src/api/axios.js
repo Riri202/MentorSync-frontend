@@ -8,7 +8,6 @@ axios.interceptors.request.use(
     // Get the authentication token from your state or localStorage
     // const { user = {} } = store.getState().auth; // Implement this function to retrieve the token
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log(user);
     // Set the token in the Authorization header
     if (user) {
       // eslint-disable-next-line no-param-reassign

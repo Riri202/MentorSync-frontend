@@ -58,7 +58,7 @@ function Mentors() {
                 <div className="transform transition duration-500 hover:scale-110">
 
                   <Card sx={{ maxWidth: 345, width: '100%', height: '100%' }} elevation={6}>
-                    <CardActionArea href={`/mentors/${mentor._id}`}>
+                    <CardActionArea href={`/users/${mentor._id}`}>
                       <CardMedia
                         component="img"
                         height="140"
@@ -76,7 +76,7 @@ function Mentors() {
                       </CardContent>
                     </CardActionArea>
                     <CardActions>
-                      <Button href={`/mentors/${mentor._id}`} size="large" color="primary" endIcon={<ArrowForward />}>
+                      <Button href={`/users/${mentor._id}`} size="large" color="primary" endIcon={<ArrowForward />}>
                         See more
                       </Button>
                     </CardActions>

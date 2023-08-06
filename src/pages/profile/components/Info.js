@@ -35,7 +35,7 @@ function Info() {
         </CardContent>
       </div>
       <CardActions className="px-10">
-        <Button href={`/mentors/${params.mentorId}/session`} variant="contained">Request Session</Button>
+        <Button href={`/mentors/${params.userId}/session`} variant="contained">Request Session</Button>
       </CardActions>
     </SectionCard>
 

@@ -18,7 +18,7 @@ const TimeslotButton = ({ time, onClick, queryParams, scheduleSession }) => {
         <button
           type="button"
           onClick={scheduleSession}
-          className="px-2 py-3 bg-[#1776D1] hover:bg-[#1465B2] w-[50%] text-base text-white font-semibold rounded focus:outline-none"
+          className="px-2 py-3 bg-[#1776D1] hover:bg-[#1465B2] w-[50%] text-base text-white font-semibold rounded-lg focus:outline-none"
         >
           Next
         </button>

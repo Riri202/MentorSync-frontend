@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/destructuring-assignment */
 import { AccessTime, ArrowBack } from '@mui/icons-material';
-import { CircularProgress, Paper } from '@mui/material';
+import { Alert, CircularProgress, Paper } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import format from 'date-fns/format';
@@ -23,7 +23,7 @@ function Session() {
   const sessionDate = queryParams.get('date');
   const sessionTime = queryParams.get('timeslot');
 
-  const { mentorId } = params;
+  const { userId: mentorId } = params;
 
   const handleSelectDate = (val) => {
     const formattedDate = format(new Date(val), 'yyyy-MM-dd');
@@ -39,7 +39,7 @@ function Session() {
 
   const goBack = () => {
     if (!sessionDate && !sessionTime) {
-      return navigate(`/mentors/${mentorId}`); // TODO: set redirect url dynamically depending on where user was before visiting session page
+      return navigate(`/users/${mentorId}`); // TODO: set redirect url dynamically depending on where user was before visiting session page
     }
     if (sessionTime) {
       queryParams.delete('timeslot');
@@ -89,14 +89,14 @@ function Session() {
   return (
     <div className="p-2 xs:p-6 md:p-16 xl:px-40 2xl:px-60 flex mt-11 bg-[#F3F2EE] min-h-screen">
       <Paper className="sm:p-5 grid xl:grid-cols-6 min-w-full">
-        <div className="col-span-1 xl:col-span-2 xl:border-r h-full px-6 flex flex-col space-y-8 mt-12">
+        <div className="col-span-1 xl:col-span-2 xl:border-r h-full px-6 flex flex-col space-y-8">
           {isMobile && (
-            <button type="button" className="border h-11 w-11 rounded-full p-2">
+            <button type="button" className="border h-11 w-11 rounded-full p-2 mt-12">
               <ArrowBack onClick={goBack} color="primary" />
             </button>
           )}
           <div>
-            <p className="text-gray-500 font-semibold">Rita Oladokun</p>
+            <p className="text-gray-500 font-semibold xl:mt-12">Rita Oladokun</p>
             <p className="text-2xl font-semibold">30 Minute Session</p>
           </div>
           <div className="flex flex-row space-x-2 items-center text-gray-500">
@@ -109,8 +109,8 @@ function Session() {
             <>
               {sessionDate ? (
                 <>
-                  <p className="xl:mt-4 text-2xl font-semibold px-6 md:p-0">
-                    Select Time
+                  <p className="xl:mt-4 mt-[-160px] border-t xl:border-t-0  text-2xl font-semibold px-6 md:p-0">
+                    Select a Time
                   </p>
                   <div className="flex flex-col space-y-2 mt-6">
                     {loading ? (
@@ -119,7 +119,7 @@ function Session() {
                       </div>
                     ) : (
                       <>
-                        { availableTimeSlots.length ? (
+                        { availableTimeSlots?.length ? (
                           availableTimeSlots.map((time, index) => (
                             <TimeslotButton
                               key={`${index + 1}-${time}`}
@@ -130,7 +130,7 @@ function Session() {
                             />
                           ))
                         ) : (
-                          <p>Mentor has no available slots for selected date</p>
+                          <Alert severity="error">Mentor has no available slots for selected date</Alert>
                         )}
                       </>
                     )}
@@ -139,7 +139,7 @@ function Session() {
               ) : (
                 <>
                   <p className="xl:mt-4 text-2xl font-semibold px-6 md:p-0">
-                    Select Date
+                    Select a Date
                   </p>
                   <Calendar
                     value={dateValue}
@@ -168,7 +168,7 @@ function Session() {
                       </div>
                     ) : (
                       <>
-                        { availableTimeSlots.length ? (
+                        { availableTimeSlots?.length ? (
                           availableTimeSlots.map((time, index) => (
                             <TimeslotButton
                               key={`${index + 1}-${time}`}
@@ -179,7 +179,7 @@ function Session() {
                             />
                           ))
                         ) : (
-                          <p>Mentor has no available slots for selected date</p>
+                          <Alert severity="error">Mentor has no available slots for selected date</Alert>
                         )}
                       </>
                     )}
