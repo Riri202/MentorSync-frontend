@@ -104,9 +104,9 @@ export default function SignInForm() {
             <Button
               type="submit"
               variant="contained"
-              style={{ padding: '10px' }}
+              style={{ padding: '10px', color: '#fff' }}
             >
-              {loading ? <CircularProgress /> : 'Sign In'}
+              {loading ? <CircularProgress color="inherit" /> : 'Sign In'}
             </Button>
           </form>
         </div>

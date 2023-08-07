@@ -10,30 +10,24 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 // import Avatar from '@mui/material/Avatar';
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import { AccountCircle } from "@mui/icons-material";
+import { user } from "../utils/constants";
 
-const pages = [{ item: "Home", link: '/' }, { item: "About Us", link: '/about' }, { item: "Sign Up", link: '/signup' }];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
+const loggedInUser = user;
+const visitorPages = [{ item: "Home", link: '/' }, { item: "About Us", link: '/about' }, { item: "Sign Up", link: '/signup' }];
+const userPages = visitorPages.slice(0, 2);
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
   const changeRoute = (path) => {
     navigate(path);
     setAnchorElNav(null);
@@ -50,7 +44,7 @@ const ResponsiveAppBar = () => {
             href="/"
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           >
-            MentorSync
+            MentorSyncccc
           </Typography>
 
           <Box sx={{ flexGrow: 1 }} />
@@ -58,7 +52,7 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
+              aria-label="menu-icon"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
@@ -84,7 +78,7 @@ const ResponsiveAppBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
+              {visitorPages.map((page) => (
                 <MenuItem key={page.item} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page.item}</Typography>
                 </MenuItem>
@@ -100,8 +94,16 @@ const ResponsiveAppBar = () => {
           >
             MentorSync
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, alignItems: 'center' }}>
+            {!loggedInUser ? visitorPages.map((page) => (
+              <Button
+                key={page.item}
+                onClick={() => changeRoute(`${page.link}`)}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                {page.item}
+              </Button>
+            )) : userPages.map((page) => (
               <Button
                 key={page.item}
                 onClick={() => changeRoute(`${page.link}`)}
@@ -110,36 +112,18 @@ const ResponsiveAppBar = () => {
                 {page.item}
               </Button>
             ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+            {loggedInUser && (
+            <IconButton
+              size="large"
+              aria-label="user-account-icon"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={() => navigate(`/users/${loggedInUser.id}`)}
+              sx={{ color: "white", display: "block" }}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+              <AccountCircle fontSize="large" />
+            </IconButton>
+            )}
           </Box>
         </Toolbar>
       </Container>

@@ -18,3 +18,22 @@ export const getMentorSchedule = async (mentorId, date) => {
     return { error: error.response?.data?.message || error.message };
   }
 };
+export const createSession = async (body) => {
+  try {
+    const { data } = await axios.post(`/sessions`, body);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return { error: error.response?.data?.message || error.message };
+  }
+};
+
+export const getSession = async (sessionId) => {
+  try {
+    const { data } = await axios.get(`/sessions/${sessionId}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return { error: error.response?.data?.message || error.message };
+  }
+};

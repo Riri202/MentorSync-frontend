@@ -7,6 +7,8 @@ import Home from './pages/home';
 import SignIn from './pages/SignIn';
 import Profile from './pages/profile';
 import Session from './pages/session';
+import Booking from './pages/session/Booking';
+import SessionDetails from './pages/session/Details';
 
 function App() {
   return (
@@ -17,8 +19,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="signup" element={<SignUpForm />} />
           <Route path="signin" element={<SignIn />} />
-          <Route path="mentors/:mentorId" element={<Profile />} />
+          <Route path="users/:userId" element={<Profile />} />
           <Route path="mentors/:mentorId/session" element={<Session />} />
+          <Route path="mentors/:mentorId/session/schedule" element={<Booking />} />
+          <Route path="sessions/:sessionId" element={<SessionDetails />} />
         </Routes>
       </Router>
     </div>

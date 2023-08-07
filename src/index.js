@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable import/named */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable prettier/prettier */
@@ -19,9 +20,7 @@ root.render(
         <App />
       </React.StrictMode>
     </LocalizationProvider>
-    ,
-  </Provider>,
-
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

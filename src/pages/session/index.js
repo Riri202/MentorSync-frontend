@@ -1,147 +1,192 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/destructuring-assignment */
-import { AccessTime } from '@mui/icons-material';
-import { Paper } from '@mui/material';
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import { AccessTime, ArrowBack } from '@mui/icons-material';
+import { Alert, CircularProgress, Paper } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import format from 'date-fns/format';
-import { getMentorSchedule, getMentorTimeSlots } from '../../api/session';
-
-const resposiveFontSize = { sm: '12px', md: '14px', lg: '16px' };
-const resposiveGridGap = { sm: '8px', md: '12px', lg: '18px' };
+import { getMentorTimeSlots } from '../../api/session';
+import TimeslotButton from './components/TimeslotButton';
+import Calendar from './components/Calendar';
 
 function Session() {
-  const [value, setValue] = useState(new Date());
+  const [dateValue, setDateValue] = useState(new Date());
   const [searchParams, setSearchParams] = useSearchParams();
-  const [availableDays, setAvailableDays] = useState([]);
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
   const params = useParams();
-  const sessionDate = searchParams.get('date');
 
-  function disableNonAvailableDays(date) {
-    return !availableDays.includes(date.getDay());
-  }
+  const queryParams = new URLSearchParams(searchParams.toString());
+  const sessionDate = queryParams.get('date');
+  const sessionTime = queryParams.get('timeslot');
 
-  const handleSetdate = (val) => {
+  const { userId: mentorId } = params;
+
+  const handleSelectDate = (val) => {
     const formattedDate = format(new Date(val), 'yyyy-MM-dd');
-    setSearchParams({ date: formattedDate });
-    setValue(val);
+    queryParams.set('date', formattedDate);
+    setSearchParams(queryParams.toString());
+    setDateValue(val);
   };
 
-  const getAvailableDays = async () => {
-    const { data } = await getMentorSchedule(params.mentorId);
-    const arr = [];
-    data.forEach((item) => {
-      arr.push(item.dayOfWeek);
-    });
-    setAvailableDays(arr);
+  const handleSelectTime = (val) => {
+    queryParams.set('timeslot', val);
+    setSearchParams(queryParams.toString());
+  };
+
+  const goBack = () => {
+    if (!sessionDate && !sessionTime) {
+      return navigate(`/users/${mentorId}`); // TODO: set redirect url dynamically depending on where user was before visiting session page
+    }
+    if (sessionTime) {
+      queryParams.delete('timeslot');
+      queryParams.delete('date');
+    } else {
+      // when user has not yet selected time
+      queryParams.delete('date');
+    }
+    return setSearchParams(queryParams.toString());
+  };
+
+  const scheduleSession = () => {
+    navigate(`/mentors/${mentorId}/session/schedule?date=${sessionDate}&timeslot=${sessionTime}`);
   };
 
   const getAvailableTimeSlots = async () => {
-    const { data } = await getMentorTimeSlots(params.mentorId, sessionDate);
-    console.log(data);
+    setLoading(true);
+    const { data } = await getMentorTimeSlots(mentorId, sessionDate);
     setAvailableTimeSlots(data);
+    setLoading(false);
   };
-
-  useEffect(() => {
-    getAvailableDays();
-  }, [params.mentorId]);
 
   useEffect(() => {
     if (sessionDate) {
       getAvailableTimeSlots();
     }
   }, [sessionDate]);
-  console.log({ availableTimeSlots });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 830);
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    queryParams.set('month', format(new Date(), 'yyyy-MM'));
+    setSearchParams(queryParams.toString());
+  }, []);
 
   return (
-    <div className="px-60 flex py-20 mt-11 bg-[#F3F2EE] min-h-screen">
-      <Paper className="p-5 grid grid-cols-1 xl:grid-cols-4 gap-12">
-        <div className="col-span-1">
-          <p>Rita Oladokun</p>
-          <p>30 Minute Session</p>
-          <div className="p-2 flex flex-row space-x-4 items-center">
-            <AccessTime />
+    <div className="p-2 xs:p-6 md:p-16 xl:px-40 2xl:px-60 flex mt-11 bg-[#F3F2EE] min-h-screen">
+      <Paper className="sm:p-5 grid xl:grid-cols-6 min-w-full">
+        <div className="col-span-1 xl:col-span-2 xl:border-r h-full px-6 flex flex-col space-y-8">
+          {isMobile && (
+            <button type="button" className="border h-11 w-11 rounded-full p-2 mt-12">
+              <ArrowBack onClick={goBack} color="primary" />
+            </button>
+          )}
+          <div>
+            <p className="text-gray-500 font-semibold xl:mt-12">Rita Oladokun</p>
+            <p className="text-2xl font-semibold">30 Minute Session</p>
+          </div>
+          <div className="flex flex-row space-x-2 items-center text-gray-500">
+            <AccessTime color="inherit" />
             <p>30 min</p>
           </div>
         </div>
-        <div className="col-span-1 xl:col-span-2">
-          <DateCalendar
-            value={value}
-            onChange={(newValue) => handleSetdate(newValue)}
-            // eslint-disable-next-line react/jsx-no-bind
-            shouldDisableDate={disableNonAvailableDays}
-            sx={{
-              width: '100%',
-              maxHeight: '100%',
-              '& .MuiDateCalendar-root': {},
-              '& .MuiDayCalendar-header ': {
-                display: 'grid',
-                gridTemplateColumns: 'repeat(7, 1fr)',
-                gridColumnGap: resposiveGridGap,
-              },
-              '& .MuiDayCalendar-weekContainer ': {
-                display: 'grid',
-                gridTemplateColumns: 'repeat(7, 1fr)',
-                gridColumnGap: resposiveGridGap,
-              },
-              '& .MuiDayCalendar-monthContainer ': {
-                display: 'grid',
-                gridTemplateRows: 'repeat(7, 1fr)',
-                gridRowGap: resposiveGridGap,
-                marginTop: 4,
-              },
-              '& .MuiDayCalendar-slideTransition ': {
-                overflowX: 'visible',
-                minHeight: '500px',
-              },
-              '& .MuiPickersDay-root ': {
-                fontSize: resposiveFontSize,
-                // padding: { sm: 2, md: 3 },
-                // color: '#6A7380',
-                // backgroundColor: 'rgba(54,132,206,0.34)',
-                color: '#1776D1',
-              },
-              '& .Mui-disabled': {
-                fontSize: resposiveFontSize,
-                color: '#6A7380',
-                backgroundColor: '#fff',
-              },
-              '& .MuiPickersDay-root:focus.Mui-selected ': {
-                backgroundColor: 'rgba(23,119,209,0.2)',
-                color: '#1776D1',
-                fontWeight: '700px',
-              },
-              '& .MuiPickersDay-root.Mui-selected ': {
-                backgroundColor: 'rgba(23,119,209,0.2)',
-                color: '#1776D1',
-                fontWeight: '700px',
-              },
-              '& .MuiPickersDay-root:hover.Mui-selected ': {
-                backgroundColor: 'rgba(54,132,206,0.34)',
-                color: '#1776D1',
-              },
-              '& .MuiDayCalendar-weekDayLabel  ': {
-                fontSize: resposiveFontSize,
-              },
-              '& .MuiPickersDay-today': {
-                border: '1px solid #1776D1',
-              },
-              '& .MuiPickersDay-today:not(.Mui-selected) ': {
-                border: '1px solid #1776D1',
-              },
-              '& .MuiPickersCalendarHeader-label': {
-                fontSize: resposiveFontSize,
-              },
-            }}
-          />
-        </div>
-        <div className="col-span-1 flex flex-col space-y-2">
-          {sessionDate && availableTimeSlots.length && (
-            availableTimeSlots.map((slot) => (
-              <div className="flex flex-row justify-center items-center border border-[#1776D1] text-[#1776D1] px-3 py-1 rounded-lg">{slot}</div>
-            ))
+        <div className="col-span-1 border-t mt-4 xl:border-t-0 xl:col-span-4 p-1 sm:px-6">
+          {isMobile ? (
+            <>
+              {sessionDate ? (
+                <>
+                  <p className="xl:mt-4 mt-[-160px] border-t xl:border-t-0  text-2xl font-semibold px-6 md:p-0">
+                    Select a Time
+                  </p>
+                  <div className="flex flex-col space-y-2 mt-6">
+                    {loading ? (
+                      <div className="flex justify-center">
+                        <CircularProgress />
+                      </div>
+                    ) : (
+                      <>
+                        { availableTimeSlots?.length ? (
+                          availableTimeSlots.map((time, index) => (
+                            <TimeslotButton
+                              key={`${index + 1}-${time}`}
+                              time={time}
+                              onClick={handleSelectTime}
+                              queryParams={queryParams}
+                              scheduleSession={scheduleSession}
+                            />
+                          ))
+                        ) : (
+                          <Alert severity="error">Mentor has no available slots for selected date</Alert>
+                        )}
+                      </>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="xl:mt-4 text-2xl font-semibold px-6 md:p-0">
+                    Select a Date
+                  </p>
+                  <Calendar
+                    value={dateValue}
+                    handleSelectDate={handleSelectDate}
+                    mentorId={mentorId}
+                  />
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              <p className="xl:mt-4 text-2xl font-semibold">
+                Select Date and Time
+              </p>
+              <div className="flex space-x-6">
+                <Calendar
+                  value={dateValue}
+                  handleSelectDate={handleSelectDate}
+                  mentorId={mentorId}
+                />
+                {sessionDate && (
+                  <div className="w-[30%] flex flex-col space-y-2 mt-6">
+                    {loading ? (
+                      <div className="flex justify-center">
+                        <CircularProgress />
+                      </div>
+                    ) : (
+                      <>
+                        { availableTimeSlots?.length ? (
+                          availableTimeSlots.map((time, index) => (
+                            <TimeslotButton
+                              key={`${index + 1}-${time}`}
+                              time={time}
+                              onClick={handleSelectTime}
+                              queryParams={queryParams}
+                              scheduleSession={scheduleSession}
+                            />
+                          ))
+                        ) : (
+                          <Alert severity="error">Mentor has no available slots for selected date</Alert>
+                        )}
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            </>
           )}
         </div>
       </Paper>
