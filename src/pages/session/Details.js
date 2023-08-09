@@ -36,7 +36,7 @@ function SessionDetails() {
         ) : (
           <div className="w-full">
             {errorText ? (
-              <Alert variant="filled" severity="warning">
+              <Alert severity="error">
                 {errorText}
               </Alert>
             ) : (

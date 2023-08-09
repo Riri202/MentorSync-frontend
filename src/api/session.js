@@ -37,3 +37,12 @@ export const getSession = async (sessionId) => {
     return { error: error.response?.data?.message || error.message };
   }
 };
+export const getSessions = async (userId, role) => {
+  try {
+    const { data } = await axios.get(`/sessions`, { params: { userId, role } });
+    return data;
+  } catch (error) {
+    console.log(error);
+    return { error: error.response?.data?.message || error.message };
+  }
+};
