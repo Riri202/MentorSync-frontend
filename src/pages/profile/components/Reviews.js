@@ -2,26 +2,11 @@ import { useState } from 'react';
 import BasicTabs from '../../../components/Tabs';
 import SectionCard from './SectionCard';
 import Review from './Review';
-
-function TabPanel(props) {
-  const { children, value, index } = props;
-
-  return (
-    <div
-      className="p-3"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-    >
-      {value === index && (
-        children
-      )}
-    </div>
-  );
-}
-
-function Reviews() {
+import TabPanel from '../../../components/TabPanel';
+import SessionReview from './SessionReview';
+import { USER_ROLE } from '../../../utils/constants';
+// to be able to review a session, session must be accepted and current time must be greater than/later than the session's time.
+function Reviews({ currentUser }) {
   const [currentTab, setCurrentTab] = useState(0);
 
   const handleTabChange = (event, newTab) => {
@@ -30,13 +15,11 @@ function Reviews() {
 
   return (
     <SectionCard>
-      <p className="font-semibold text-2xl">
-        Reviews
-      </p>
-      <p className="font-light text-gray-500">
+      <p className="font-light text-gray-500 mb-2">
         Bio This will allow you to bring Twilio’s public or private network connectivity closer to your
         applications for improved performance.
       </p>
+      {currentUser && currentUser.role === USER_ROLE && <SessionReview />}
       <div className="w-full mt-4">
         <BasicTabs currentTab={currentTab} handleTabChange={handleTabChange} tabs={["Received", "Given"]} />
         <TabPanel value={currentTab} index={0}>

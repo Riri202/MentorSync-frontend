@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { AccessTime, CalendarMonthOutlined, CheckCircleOutlineOutlined, CommentOutlined } from '@mui/icons-material';
 import { Alert, Button, CircularProgress, Paper } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import format from 'date-fns/format';
 import { getSession } from '../../api/session';
+import { formatHumanReadableDate } from '../../utils/date';
 
 function SessionDetails() {
   const params = useParams();
@@ -52,7 +52,7 @@ function SessionDetails() {
                     </div>
                     <div className="flex flex-col space-y-1 items-center text-gray-500 text-sm md:text-base">
                       <CalendarMonthOutlined color="inherit" />
-                      <p className="font-medium">{`${session?.time}, ${format(new Date(session?.sessionDate), 'PPPP')}`}</p>
+                      <p className="font-medium">{`${session?.time}, ${formatHumanReadableDate(session?.sessionDate)}`}</p>
                     </div>
                     {session?.note && (
                     <div className="flex flex-col space-y-1 items-center text-gray-500 text-sm md:text-base">

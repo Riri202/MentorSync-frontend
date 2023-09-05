@@ -13,6 +13,7 @@ function FormInput({
   type,
   isTextArea = false,
   rows,
+  disabled,
 }) {
   const [isPassword] = useState(type === 'password');
   const [show, setShow] = useState(!isPassword);
@@ -32,6 +33,7 @@ function FormInput({
             {...register(name)}
             value={value}
             onChange={onChange}
+            disabled={disabled}
           />
         ) : (
           <textarea
@@ -41,6 +43,7 @@ function FormInput({
             {...register(name)}
             value={value}
             onChange={onChange}
+            disabled={disabled}
             rows={rows}
           />
         )}

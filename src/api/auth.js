@@ -11,7 +11,7 @@ export const setAuthToken = (token) => {
 export const setCurrentUser = (user) => {
   if (user) {
     localStorage.setItem('user', JSON.stringify(user));
-  } else localStorage.setItem('user', '');
+  } else localStorage.removeItem('user');
 };
 
 export const signin = async (body) => {

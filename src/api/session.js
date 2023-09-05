@@ -46,3 +46,22 @@ export const getSessions = async (userId, role) => {
     return { error: error.response?.data?.message || error.message };
   }
 };
+export const updateSessionStatus = async (sessionId, status) => {
+  try {
+    const { data } = await axios.patch(`/sessions/${sessionId}`, { status });
+    return data;
+  } catch (error) {
+    console.log(error);
+    return { error: error.response?.data?.message || error.message };
+  }
+};
+
+export const getExpiredSessions = async () => {
+  try {
+    const { data } = await axios.get('/sessions/expired');
+    return data;
+  } catch (error) {
+    console.log(error);
+    return { error: error.response?.data?.message || error.message };
+  }
+};

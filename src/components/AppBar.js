@@ -11,12 +11,15 @@ import Container from "@mui/material/Container";
 // import Avatar from '@mui/material/Avatar';
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import { AccountCircle } from "@mui/icons-material";
+import { AccountCircle, Logout } from "@mui/icons-material";
+import { Avatar, Divider, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import { user } from "../utils/constants";
+import { setCurrentUser } from "../api/auth";
 
-const loggedInUser = user;
-const visitorPages = [{ item: "Home", link: '/' }, { item: "About Us", link: '/about' }, { item: "Sign Up", link: '/signup' }];
-const userPages = visitorPages.slice(0, 2);
+const loggedInUser = user || '';
+const guestMenuItems = [{ item: "Home", link: '/' }, { item: "About Us", link: '/about' }, { item: "Sign In", link: '/signin' }];
+const loggedInUserMenuItems = guestMenuItems.slice(0, 2);
+
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const navigate = useNavigate();
@@ -33,10 +36,22 @@ const ResponsiveAppBar = () => {
     setAnchorElNav(null);
   };
 
+  const [anchorProfleMenu, setAnchorProfileMenu] = React.useState(null);
+  const open = Boolean(anchorProfleMenu);
+  const handleClickProfileMenu = (event) => {
+    setAnchorProfileMenu(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorProfileMenu(null);
+  };
+
+  const logout = () => setCurrentUser();
+
   return (
     <AppBar position="fixed" elevation={0}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          {/* non-mobile nav logo  */}
           <Typography
             variant="h6"
             noWrap
@@ -49,6 +64,7 @@ const ResponsiveAppBar = () => {
 
           <Box sx={{ flexGrow: 1 }} />
 
+          {/* mobile nav */}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -78,11 +94,30 @@ const ResponsiveAppBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {visitorPages.map((page) => (
+              {!loggedInUser ? guestMenuItems.map((page) => (
+                <MenuItem key={page.item} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page.item}</Typography>
+                </MenuItem>
+              )) : loggedInUserMenuItems.map((page) => (
                 <MenuItem key={page.item} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page.item}</Typography>
                 </MenuItem>
               ))}
+              {loggedInUser && (
+                <MenuItem>
+
+                  <IconButton
+                    size="large"
+                    aria-label="user-account-icon"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={() => navigate(`/users/${loggedInUser.id}`)}
+                    sx={{ color: "black", display: "block" }}
+                  >
+                    <AccountCircle fontSize="large" />
+                  </IconButton>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
           <Typography
@@ -94,8 +129,10 @@ const ResponsiveAppBar = () => {
           >
             MentorSync
           </Typography>
+
+          {/* non-mobile nav  */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, alignItems: 'center' }}>
-            {!loggedInUser ? visitorPages.map((page) => (
+            {!loggedInUser ? guestMenuItems.map((page) => (
               <Button
                 key={page.item}
                 onClick={() => changeRoute(`${page.link}`)}
@@ -103,7 +140,7 @@ const ResponsiveAppBar = () => {
               >
                 {page.item}
               </Button>
-            )) : userPages.map((page) => (
+            )) : loggedInUserMenuItems.map((page) => (
               <Button
                 key={page.item}
                 onClick={() => changeRoute(`${page.link}`)}
@@ -113,16 +150,78 @@ const ResponsiveAppBar = () => {
               </Button>
             ))}
             {loggedInUser && (
-            <IconButton
-              size="large"
-              aria-label="user-account-icon"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={() => navigate(`/users/${loggedInUser.id}`)}
-              sx={{ color: "white", display: "block" }}
-            >
-              <AccountCircle fontSize="large" />
-            </IconButton>
+            <>
+              <IconButton
+                size="large"
+                aria-label="user-account-icon"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleClickProfileMenu}
+                sx={{ color: "white", display: "block" }}
+              >
+                <AccountCircle fontSize="large" />
+              </IconButton>
+              <Menu
+                anchorEl={anchorProfleMenu}
+                id="account-menu"
+                open={open}
+                onClose={handleClose}
+                onClick={handleClose}
+                PaperProps={{
+                  elevation: 0,
+                  sx: {
+                    overflow: 'visible',
+                    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                    mt: 1.5,
+                    '& .MuiAvatar-root': {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
+                      mr: 1,
+                    },
+                    '&:before': {
+                      content: '""',
+                      display: 'block',
+                      position: 'absolute',
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: 'background.paper',
+                      transform: 'translateY(-50%) rotate(45deg)',
+                      zIndex: 0,
+                    },
+                  },
+                }}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+              >
+                <MenuItem onClick={() => navigate(`/users/${loggedInUser.id}`)}>
+                  <ListItem alignItems="center">
+                    {/* <ListItemAvatar>
+                      <Avatar />
+                    </ListItemAvatar> */}
+                    <ListItemIcon>
+                      <Avatar fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText className="font-bold" primary={`${loggedInUser.firstname}. ${loggedInUser.lastname.charAt(0).toUpperCase()}`} />
+
+                    {' '}
+                  </ListItem>
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={logout}>
+                  <ListItem>
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    Logout
+                  </ListItem>
+
+                </MenuItem>
+              </Menu>
+
+            </>
             )}
           </Box>
         </Toolbar>
