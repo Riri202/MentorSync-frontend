@@ -65,3 +65,22 @@ export const getExpiredSessions = async () => {
     return { error: error.response?.data?.message || error.message };
   }
 };
+
+export const reviewSession = async (body) => {
+  try {
+    const { data } = await axios.post('/sessions/review', body);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return { error: error.response?.data?.message || error.message };
+  }
+};
+export const getReviewsForSessions = async () => {
+  try {
+    const { data } = await axios.get('/sessions/review');
+    return data;
+  } catch (error) {
+    console.log(error);
+    return { error: error.response?.data?.message || error.message };
+  }
+};

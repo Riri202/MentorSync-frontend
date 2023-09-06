@@ -15,7 +15,8 @@ export default function BasicTabs({ tabs, currentTab, handleTabChange }) {
     <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: 2 }}>
       <Tabs value={currentTab} onChange={handleTabChange} aria-label="basic tabs example">
         {tabs.map((tab, index) => (
-          <Tab label={tab} {...a11yProps(index)} />
+          // eslint-disable-next-line react/no-array-index-key
+          <Tab key={index} label={tab} {...a11yProps(index)} />
         ))}
       </Tabs>
     </Box>

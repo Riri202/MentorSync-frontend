@@ -26,7 +26,7 @@ export default function DialogModal({
   children,
   fullWidth = false,
   maxWidth = false,
-  handleSubmit,
+  hasDialogActionButtons = true,
 }) {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -41,18 +41,12 @@ export default function DialogModal({
     setSubmitErrorText('');
   };
 
-  const submit = async (event) => {
-    event.preventDefault();
+  const submit = async () => {
     setLoading(true);
-    let response;
-    if (handleSubmit) {
-      response = handleSubmit();
-    } else {
-      response = await submitAction();
-    }
+    const response = await submitAction();
     if (response?.error) {
       setSubmitErrorText(response?.error);
-    } else if (reload) {
+    } else {
       reload();
     }
     setLoading(false);
@@ -79,27 +73,29 @@ export default function DialogModal({
         fullWidth={fullWidth}
         maxWidth={maxWidth}
       >
-        <form onSubmit={submit}>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogContent dividers>
-            <DialogContentText id="alert-dialog-description">
-              {subTitle}
-            </DialogContentText>
-            {children && children}
-            {submitErrorText && <Alert severity="error">{submitErrorText}</Alert>}
-          </DialogContent>
-          <DialogActions>
-            <Button type="submit" disabled={loading} variant="contained">
-              {loading && (
-                <CircularProgress size={12} style={{ marginRight: 10 }} />
-              )}
-              Yes
-            </Button>
-            <Button disabled={loading} onClick={handleClose} variant="outlined">
-              No
-            </Button>
-          </DialogActions>
-        </form>
+        <DialogTitle>{title}</DialogTitle>
+        <DialogContent dividers>
+          <DialogContentText id="alert-dialog-description">
+            {subTitle}
+          </DialogContentText>
+          {children && children}
+          {submitErrorText && <Alert severity="error">{submitErrorText}</Alert>}
+        </DialogContent>
+        {hasDialogActionButtons && (
+        <DialogActions>
+          <Button disabled={loading} onClick={submit} variant="contained">
+            {loading && (
+            <CircularProgress size={12} style={{ marginRight: 10 }} />
+            )}
+            Yes
+          </Button>
+          <Button disabled={loading} onClick={handleClose} variant="outlined">
+            No
+          </Button>
+
+        </DialogActions>
+        )}
+
       </Dialog>
     </div>
   );
