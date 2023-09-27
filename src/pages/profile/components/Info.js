@@ -2,17 +2,17 @@
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import { Edit, Email, Place } from '@mui/icons-material';
-import { useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { Alert, CircularProgress } from '@mui/material';
 import BannerImage from '../../../assets/images/profile-banner.jpg';
 import SectionCard from './SectionCard';
-import { MENTOR_ROLE, user } from '../../../utils/constants';
+import { MENTOR_ROLE } from '../../../utils/constants';
+import { useCurrentUser } from '../../../hooks/useCurrentUser';
 
 function Info({ loading, errorText, profile }) {
-  const params = useParams();
-  const { userId } = params;
-  const currentUser = user;
-
+  const { userId } = useParams();
+  const { pathname } = useLocation();
+  const currentUser = useCurrentUser();
   return (
     <SectionCard img={BannerImage}>
       {
@@ -61,8 +61,11 @@ function Info({ loading, errorText, profile }) {
                       )}
                     </>
                   ) : (
-                    <Button sx={{ fontSize: { xs: 10, sm: 12 } }} className="italic w-full md:w-auto" href="/signin" variant="contained">login to request session</Button>
+                    <Link to="/signin" state={{ redirectTo: pathname }}>
+                      <Button sx={{ fontSize: { xs: 10, sm: 12 } }} className="italic w-full md:w-auto" variant="contained">login to request session</Button>
+                    </Link>
                   ) }
+                  {currentUser && currentUser.role === MENTOR_ROLE && currentUser.id === profile?._id && <Button href={`/mentors/${userId}/availability`} variant="contained">Edit your schedule</Button>}
                 </CardContent>
                 )}
 

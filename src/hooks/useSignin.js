@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCurrentUser, signin } from '../api/auth';

@@ -14,7 +14,7 @@ function Reviews({ currentUser, profile }) {
 
   const getReviews = async () => {
     setLoading(true);
-    const response = await getReviewsForSessions();
+    const response = await getReviewsForSessions(profile?._id, profile?.role);
     if (response?.error) {
       setErrorText(response?.error);
     } else {
@@ -41,7 +41,7 @@ function Reviews({ currentUser, profile }) {
 
               <div key={review._id} className="flex flex-col space-y-3">
 
-                <Review isMentor={currentUser.role === MENTOR_ROLE} review={review} />
+                <Review isMentor={currentUser && currentUser.role === MENTOR_ROLE} review={review} />
 
               </div>
             )) : <p className="text-center text-gray-500">No reviews</p>}

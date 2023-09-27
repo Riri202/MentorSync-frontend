@@ -6,11 +6,10 @@ import BasicTabs from '../../components/Tabs';
 import TabPanel from '../../components/TabPanel';
 import Sessions from './components/Sessions';
 import { getUserDetails } from '../../api';
-import { user } from '../../utils/constants';
-
-const currentUser = user;
+import { useCurrentUser } from '../../hooks/useCurrentUser';
 
 function Profile() {
+  const currentUser = useCurrentUser();
   const params = useParams();
   const { userId } = params;
   const [currentTab, setCurrentTab] = useState(0);
@@ -49,12 +48,12 @@ function Profile() {
     <div className="p-2 xs:p-6 md:p-16 xl:px-40 2xl:px-60  flex flex-col space-y-4 relative py-20 mt-11 bg-[#F3F2EE] min-h-screen">
       <Info loading={loading} errorText={errorText} profile={profile} />
       <BasicTabs currentTab={currentTab} handleTabChange={handleTabChange} tabs={tabs} />
-      {currentUser && currentUser.id === profile?._id && (
+      {currentUser && currentUser?.id === profile?._id && (
       <TabPanel value={currentTab} index={0} className="p-0">
         <Sessions profile={profile} currentUser={currentUser} />
       </TabPanel>
       )}
-      <TabPanel value={currentTab} index={currentUser && currentUser.id === profile?._id ? 1 : 0} className="p-0">
+      <TabPanel value={currentTab} index={currentUser && currentUser?.id === profile?._id ? 1 : 0} className="p-0">
         <Reviews currentUser={currentUser} profile={profile} />
       </TabPanel>
       <p className="absolute bottom-10 pl-3 text-xs flex justify-center items-center font-light text-gray-500">
