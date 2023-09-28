@@ -4,26 +4,24 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, CircularProgress, Alert } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import FormInput from '../components/form/Input';
 import { useSignIn } from '../hooks/useSignin';
 import syncImage from '../assets/images/signup-sync-white.jpg';
 
 export default function SignInForm() {
+  const { state } = useLocation();
   const fillInMessage = '* Your input is required';
 
   const validationSchema = yup.object().shape({
     email: yup
       .string()
       .matches(
-        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-        '* Invalid email format',
+        /^\S+@\S+$/i,
       )
       .required(fillInMessage),
     password: yup
       .string()
-      .min(6, '* Must be at least 6 characters long')
-      .max(10, '* Must be at most 10 characters long')
       .required(fillInMessage),
   });
 
@@ -51,7 +49,7 @@ export default function SignInForm() {
     if (response?.error) {
       setErrorText(response?.error);
     } else {
-      navigate('/');
+      navigate(state?.redirectTo ? `${state?.redirectTo}` : '/');
     }
   };
 
@@ -64,13 +62,14 @@ export default function SignInForm() {
             <h2 className="text-5xl font-bold">Welcome Back</h2>
             <p>
               Don&apos;t have an account?
-              <button
-                className="text-green-500 ml-2 cursor-pointer underline"
-                onClick={() => navigate('/Signup')}
-                type="button"
-              >
-                Create one
-              </button>
+              <Link to="/Signup" state={{ redirectTo: state?.redirectTo ? state?.redirectTo : '/' }}>
+                <button
+                  className="text-green-500 ml-2 cursor-pointer underline"
+                  type="button"
+                >
+                  Create one
+                </button>
+              </Link>
             </p>
           </div>
 

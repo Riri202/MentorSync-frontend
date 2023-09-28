@@ -3,8 +3,8 @@
 import {
   SIGNUP_SUCCESS,
   SIGNOUT,
-  SIGNIN_FAILURE,
-  SIGNIN_SUCCESS,
+  // SIGNIN_FAILURE,
+  // SIGNIN_SUCCESS,
   SET_MESSAGE,
 } from './types';
 import authService from '../services/auth.service';
@@ -20,24 +20,26 @@ export const signup = (username, email, password) => (dispatch) => authService.s
   return Promise.resolve();
 });
 
+// eslint-disable-next-line function-paren-newline
 export const signin = (email, password) => authService.signin(email, password).then(
-  (response) => {
-    dispatch({
-      type: SIGNIN_SUCCESS,
-      payload: { user: response },
-    });
-    return Promise.resolve();
-  },
-  (error) => {
-    dispatch({
-      type: SIGNIN_FAILURE,
-    });
-    dispatch({
-      type: SET_MESSAGE,
-      payload: error.message,
-    });
-    Promise.reject();
-  },
+  // (response) => {
+  //   dispatch({
+  //     type: SIGNIN_SUCCESS,
+  //     payload: { user: response },
+  //   });
+  //   return Promise.resolve();
+  // },
+  // (error) => {
+  //   dispatch({
+  //     type: SIGNIN_FAILURE,
+  //   });
+  //   dispatch({
+  //     type: SET_MESSAGE,
+  //     payload: error.message,
+  //   });
+  //   Promise.reject();
+  // },
+// eslint-disable-next-line function-paren-newline
 );
 
 export const logout = (dispatch) => {

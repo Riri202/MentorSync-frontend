@@ -8,18 +8,22 @@ import './index.css';
 import { Provider } from 'react-redux';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { PersistGate } from 'redux-persist/integration/react'; // Import PersistGate
 import reportWebVitals from './reportWebVitals';
-import store from './redux/store';
+import { store, persistor } from './redux/store';
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <React.StrictMode>
+    <PersistGate loading={null} persistor={persistor}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        {/* <React.StrictMode> */}
         <App />
-      </React.StrictMode>
-    </LocalizationProvider>
+        {/* </React.StrictMode> */}
+      </LocalizationProvider>
+    </PersistGate>
+
   </Provider>
 );
 

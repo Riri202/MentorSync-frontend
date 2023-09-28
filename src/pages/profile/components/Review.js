@@ -1,20 +1,24 @@
 import { Paper, Rating } from '@mui/material';
 import React from 'react';
+import { format } from 'date-fns';
 import UserCard from '../../../components/UserCard';
 
-function Review({ received = true }) {
+function Review({ isMentor, review }) {
+  const { mentor, mentee, rating, review: info, createdAt } = review;
+  const mentorFullname = `${mentor.firstname} ${mentor.lastname}`;
+  const menteeFullname = `${mentee.firstname} ${mentee.lastname}`;
   return (
     <Paper elevation={0} className="p-5">
-      <UserCard />
+      <UserCard profile={isMentor ? mentee : mentor} />
       <div className="flex flex-col space-y-3 mt-3 text-gray-500">
         <p className="font-light text-xs">
-          July 2, 2023,
-          {' '}
-          {`${received ? "Rita received a review after a session with Maria" : "Rita reviewed a session with Maria"}`}
+          {format(new Date(createdAt), 'MMMM d, yyyy')}
+          ,
+          {`${isMentor ? ` You received a review after your session with ${menteeFullname}` : ` You reviewed your session with ${mentorFullname}`}`}
         </p>
-        <Rating name="session-review-rating" value={4} readOnly />
+        <Rating name="session-review-rating" value={rating} readOnly />
         <p className="font-normal text-sm">
-          Ut error vero sit officiis dolores ea rerum culpa ut autem temporibus ut deserunt cupiditate hic numquam illum. Aut architecto quia et obcaecati voluptatem et quaerat optio sit repellat autem et enim nesciunt. Et aliquam aperiam aut necessitatibus voluptatem est quae quaerat in aliquam quia ea officia ratione non dolores nisi et fugiat vero. In odit illum ut eaque eaque qui sapiente esse est optio reprehenderit rem ratione placeat qui deserunt perferendis id incidunt ducimus.
+          {info}
         </p>
       </div>
 

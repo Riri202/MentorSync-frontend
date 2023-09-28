@@ -20,7 +20,9 @@ function Calendar({ value, handleSelectDate, mentorId }) {
     const { data } = await getMentorSchedule(mentorId);
     const arr = [];
     data.forEach((item) => {
-      arr.push(item.dayOfWeek);
+      if (item.isAvailable) {
+        arr.push(item.dayOfWeek);
+      }
     });
     setAvailableDays(arr);
     setLoading(false);

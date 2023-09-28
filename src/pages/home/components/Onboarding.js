@@ -28,7 +28,7 @@ function Onboarding() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 w-full">
         {labels.map((label, index) => (
 
-          <div className="flex flex-col space-y-4 col-span-1 md:col-span-3">
+          <div key={label.title} className="flex flex-col space-y-4 col-span-1 md:col-span-3">
             <div className="flex space-x-1 justify-center items-center">
               <div className="rounded-full p-3 bg-[rgba(23,119,209,0.2)] w-20 h-20 flex items-center justify-center">
                 {index + 1}

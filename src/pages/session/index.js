@@ -23,7 +23,7 @@ function Session() {
   const sessionDate = queryParams.get('date');
   const sessionTime = queryParams.get('timeslot');
 
-  const { userId: mentorId } = params;
+  const { mentorId } = params;
 
   const handleSelectDate = (val) => {
     const formattedDate = format(new Date(val), 'yyyy-MM-dd');

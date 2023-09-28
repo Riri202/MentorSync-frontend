@@ -9,9 +9,18 @@ export const getMentorTimeSlots = async (mentorId, date) => {
     return { error: error.response?.data?.message || error.message };
   }
 };
-export const getMentorSchedule = async (mentorId, date) => {
+export const getMentorSchedule = async (mentorId) => {
   try {
-    const { data } = await axios.get(`/mentors/${mentorId}/schedule`, { params: { date } });
+    const { data } = await axios.get(`/mentors/${mentorId}/schedule`);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return { error: error.response?.data?.message || error.message };
+  }
+};
+export const updateMentorSchedule = async (mentorId, body) => {
+  try {
+    const { data } = await axios.patch(`/mentors/${mentorId}/schedule`, body);
     return data;
   } catch (error) {
     console.log(error);
@@ -31,6 +40,53 @@ export const createSession = async (body) => {
 export const getSession = async (sessionId) => {
   try {
     const { data } = await axios.get(`/sessions/${sessionId}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return { error: error.response?.data?.message || error.message };
+  }
+};
+export const getSessions = async (userId, role) => {
+  try {
+    const { data } = await axios.get(`/sessions`, { params: { userId, role } });
+    return data;
+  } catch (error) {
+    console.log(error);
+    return { error: error.response?.data?.message || error.message };
+  }
+};
+export const updateSessionStatus = async (sessionId, status) => {
+  try {
+    const { data } = await axios.patch(`/sessions/${sessionId}`, { status });
+    return data;
+  } catch (error) {
+    console.log(error);
+    return { error: error.response?.data?.message || error.message };
+  }
+};
+
+export const getExpiredSessions = async () => {
+  try {
+    const { data } = await axios.get('/sessions/expired');
+    return data;
+  } catch (error) {
+    console.log(error);
+    return { error: error.response?.data?.message || error.message };
+  }
+};
+
+export const reviewSession = async (body) => {
+  try {
+    const { data } = await axios.post('/sessions/review', body);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return { error: error.response?.data?.message || error.message };
+  }
+};
+export const getReviewsForSessions = async (userId, role) => {
+  try {
+    const { data } = await axios.get('/sessions/review', { params: { userId, role } });
     return data;
   } catch (error) {
     console.log(error);
