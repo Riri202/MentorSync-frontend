@@ -13,7 +13,7 @@ function SectionCard({ img, children }) {
         </div>
       )}
 
-      <div className="p-6 md:p-10">
+      <div className="p-4 md:p-10">
         {children}
       </div>
     </Card>

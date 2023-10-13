@@ -87,10 +87,12 @@ function Sessions({ profile, currentUser }) {
                 ).length ? (
                     sessions?.nonExpiredSessions
                       ?.filter(
-                        (session) => session.status === SESSION_STATUS_ACCEPTED,
+                        (session) => session.status === SESSION_STATUS_ACCEPTED && !sessions?.expiredSessions
+                          ?.map((item) => item._id)
+                          .includes(session._id),
                       )
                       .map((session) => (
-                        <Session key={session._id} session={session} />
+                        <Session key={session._id} session={session} isAccepted />
                       ))
                   ) : (
                     <p>No sessions to display</p>

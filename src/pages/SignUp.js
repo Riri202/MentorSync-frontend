@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
-import { Button } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Alert, Button, CircularProgress } from "@mui/material";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormInput from "../components/form/Input";
+import { useSignUp } from "../hooks/UseSignUp";
 
 export default function SignUpForm() {
   const fillInMessage = '* Your input is required';
@@ -33,8 +34,21 @@ export default function SignUpForm() {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(validationSchema) });
-  const onSubmit = (data) => console.log(data);
-  console.log(errors);
+
+  const navigate = useNavigate();
+  const [errorText, setErrorText] = useState('');
+
+  const [signup, loading] = useSignUp();
+
+  const onSubmit = async (data) => {
+    if (errors === {}) return;
+    const response = await signup(data);
+    if (response?.error) {
+      setErrorText(response?.error);
+    } else {
+      navigate(state?.redirectTo ? `${state?.redirectTo}` : '/');
+    }
+  };
 
   return (
     <div className="p-20">
@@ -57,6 +71,11 @@ export default function SignUpForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col space-y-4 w-11/12 mx-auto"
       >
+        {errorText && (
+        <Alert severity="error">
+          {errorText}
+        </Alert>
+        )}
         <FormInput
           placeholder="Firstname"
           name="firstname"
@@ -93,6 +112,8 @@ export default function SignUpForm() {
           name="bio"
           error={errors.bio}
           register={register}
+          isTextArea
+          rows={4}
         />
         <FormInput
           placeholder="Occupation"
@@ -133,8 +154,9 @@ export default function SignUpForm() {
           type="submit"
           variant="contained"
           style={{ width: "40%", padding: "10px" }}
+          disabled={loading}
         >
-          Create Account
+          {loading ? <CircularProgress color="inherit" /> : 'Create Account'}
         </Button>
       </form>
     </div>
