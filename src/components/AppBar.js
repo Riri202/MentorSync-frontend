@@ -46,24 +46,34 @@ const ResponsiveAppBar = () => {
   const logout = useSignOut();
 
   return (
-    <AppBar position="fixed" elevation={0}>
+    <AppBar style={{ backgroundColor: '#fff', padding: "16px" }} position="fixed" elevation={0}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* desktop nav logo  */}
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href="/"
+            sx={{ mr: 2, color: '#1776D1', display: { xs: "none", md: "flex" }, fontWeight: 'bold' }}
+          >
+            MentorSync
+          </Typography>
+
+          {/* <Box sx={{ flexGrow: { md } }} /> */}
+
+          {/* mobile nav */}
           <Typography
             variant="h6"
             noWrap
             component="a"
             href="/"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+            sx={{ color: '#1776D1', display: { xs: "flex", md: "none" }, fontWeight: 'bold' }}
           >
             MentorSync
           </Typography>
-
           <Box sx={{ flexGrow: 1 }} />
-
-          {/* mobile nav */}
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="menu-icon"
@@ -72,7 +82,7 @@ const ResponsiveAppBar = () => {
               onClick={handleOpenMobileNavMenu}
               color="inherit"
             >
-              <MenuIcon />
+              <MenuIcon color="primary" />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -98,7 +108,7 @@ const ResponsiveAppBar = () => {
                   overflow: 'visible',
                   filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                   mt: 0.6,
-                  ml: -6,
+                  // ml: -6,
                   pt: 2,
                   '& .MuiAvatar-root': {
                     width: 40,
@@ -142,22 +152,13 @@ const ResponsiveAppBar = () => {
               )}
             </Menu>
           </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
-            MentorSync
-          </Typography>
 
           {/* desktop nav  */}
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, alignItems: 'center' }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, alignItems: 'start', justifyContent: 'end' }}>
             {!loggedInUser ? guestMenuItems.map((page) => (
               <Link key={page.item} to={`${page.link}`} state={{ redirectTo: page.link === "/signin" ? pathname : null }}>
                 <Button
-                  sx={{ my: 2, color: "white", display: "block" }}
+                  sx={{ my: 2, color: "#1776D1", display: "block", fontWeight: 'bold' }}
                 >
                   {page.item}
                 </Button>
@@ -166,7 +167,7 @@ const ResponsiveAppBar = () => {
               <Button
                 key={page.item}
                 onClick={() => navigate(`${page.link}`)}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{ my: 2, color: "#1776D1", display: "block", fontWeight: 'bold' }}
               >
                 {page.item}
               </Button>
@@ -179,7 +180,7 @@ const ResponsiveAppBar = () => {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleClickProfileMenu}
-                sx={{ color: "white", display: "block" }}
+                sx={{ color: "#1776D1", display: "block" }}
               >
                 <AccountCircle fontSize="large" />
               </IconButton>
