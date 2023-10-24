@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { Alert, CircularProgress } from '@mui/material';
@@ -73,26 +72,25 @@ export default function DialogModal({
         fullWidth={fullWidth}
         maxWidth={maxWidth}
       >
-        <DialogTitle>{title}</DialogTitle>
+        <DialogTitle sx={{ textAlign: 'center' }}>{title}</DialogTitle>
         <DialogContent dividers>
-          <DialogContentText id="alert-dialog-description">
+          <p className="font-generalSansRegular p-3 max-h-24 md:max-h-fit overflow-y-scroll">
             {subTitle}
-          </DialogContentText>
+          </p>
           {children && children}
           {submitErrorText && <Alert severity="error">{submitErrorText}</Alert>}
         </DialogContent>
         {hasDialogActionButtons && (
-        <DialogActions>
-          <Button disabled={loading} onClick={submit} variant="contained">
+        <DialogActions sx={{ display: 'flex', width: '100%', padding: 2 }}>
+          <Button sx={{ width: '50%', padding: '10px' }} disabled={loading} onClick={submit} variant="contained" disableElevation>
             {loading && (
             <CircularProgress size={12} style={{ marginRight: 10 }} />
             )}
             Yes
           </Button>
-          <Button disabled={loading} onClick={handleClose} variant="outlined">
+          <Button sx={{ width: '50%', padding: '10px' }} disabled={loading} onClick={handleClose} variant="outlined">
             No
           </Button>
-
         </DialogActions>
         )}
 

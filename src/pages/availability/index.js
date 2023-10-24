@@ -84,7 +84,7 @@ const DayOfWeek = ({ day }) => {
                   }}
                   name="isAvailable"
                 />
-                <p className="font-bold tracking-wide capitalize">
+                <p className="tracking-wide capitalize font-generalSansMedium">
                   {daysOfWeek[dayOfWeek]}
                 </p>
               </div>
@@ -111,7 +111,7 @@ const DayOfWeek = ({ day }) => {
                   />
                 </div>
               ) : (
-                <p className="font-extralight text-gray-500 flex flex-row items-center pl-3 md:pl-0">
+                <p className="text-gray-500 flex flex-row items-center pl-3 md:pl-0 font-generalSansLight">
                   Unavailable
                 </p>
               )}
@@ -153,16 +153,16 @@ function Availability() {
     getAvailableDays();
   }, [mentorId]);
   return (
-    <div className="p-2 xs:p-6 md:p-16 xl:px-40 2xl:px-60 flex flex-col mt-11 bg-[#F3F2EE] min-h-screen">
+    <div className="p-2 xs:p-6 md:p-16 xl:px-40 2xl:px-60 flex flex-col mt-32 sm:mt-28 bg-[#F3F2EE] min-h-screen">
       <SectionCard>
-        <p className="text-4xl font-semibold tracking-wide border-b pb-2">Availability</p>
+        <p className="text-4xl font-generalSansMedium tracking-wide border-b pb-2">Availability</p>
         {loading ? (
           <CircularProgress />
         ) : errorText ? (
           <Alert severity="error">{errorText}</Alert>
         ) : (
           <>
-            <p className="text-xl font-medium text-gray-500 pt-4">Set your working hours</p>
+            <p className="text-xl font-generalSansRegular text-gray-500 pt-4">Set your working hours</p>
             <div className="flex flex-col space-y-3 divide-y">
               {availableDays.map((day) => (
                 <DayOfWeek key={day._id} day={day} />

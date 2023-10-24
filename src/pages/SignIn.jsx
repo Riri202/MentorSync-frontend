@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, CircularProgress, Alert } from '@mui/material';
+import { CircularProgress, Alert } from '@mui/material';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import FormInput from '../components/form/Input';
 import { useSignIn } from '../hooks/useSignin';
 import syncImage from '../assets/images/signup-sync-white.jpg';
+import Button from '../components/Button';
 
 export default function SignInForm() {
   const { state } = useLocation();
@@ -54,13 +55,12 @@ export default function SignInForm() {
   };
 
   return (
-    <div className="p-20">
-      {/* <Paper elevation={12} style={{ paddingRight: 150, borderRadius: 20 }}> */}
-      <div className="flex flex-col-reverse md:flex-row-reverse">
-        <div className="md:pl-3 w-full md:w-1/2 flex flex-col justify-center items-center">
+    <div className="p-2 xs:p-6 md:p-16 xl:px-40 2xl:px-60 min-h-screen mt-20 flex justify-center items-center">
+      <div className="flex flex-col-reverse lg:flex-row-reverse">
+        <div className="lg:pl-3 w-full lg:w-1/2 flex flex-col justify-center items-center">
           <div className="flex flex-col space-y-3 justify-center items-center mb-10">
-            <h2 className="text-5xl font-bold">Welcome Back</h2>
-            <p>
+            <h2 className="text-5xl font-generalSansSemiBold tracking-wide text-center lg:text-left bg-gradient-to-l from-blue-800 via-blue-600 to-blue-400 bg-clip-text text-transparent ">Welcome Back!</h2>
+            <p className="font-generalSansRegular text-gray-500">
               Don&apos;t have an account?
               <Link to="/Signup" state={{ redirectTo: state?.redirectTo ? state?.redirectTo : '/' }}>
                 <button
@@ -75,7 +75,7 @@ export default function SignInForm() {
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col space-y-4 w-[80%]"
+            className="flex flex-col space-y-4 w-full"
           >
             {errorText && (
             <Alert severity="error">
@@ -100,31 +100,25 @@ export default function SignInForm() {
               register={register}
               type="password"
             />
-            <Button
-              type="submit"
-              variant="contained"
-              style={{ padding: '10px', color: '#fff' }}
-              disabled={loading}
-            >
-              {loading ? <CircularProgress color="inherit" /> : 'Sign In'}
+            <Button type="submit">
+              {loading ? <CircularProgress size={25} color="inherit" /> : <span>Sign In</span>}
             </Button>
           </form>
         </div>
-        <div className="w-full md:w-1/2 relative">
+        <div className="w-full lg:w-1/2 relative">
           <img
             src={syncImage}
             className="rounded-[20px]"
             color="blue"
             alt="people meeting online"
           />
-          <p className="absolute bottom-10 pl-3 text-xs flex justify-center items-center font-light text-gray-500">
+          <p className="absolute bottom-10 pl-3 text-xs flex justify-center items-center font-generalSansExtralight text-gray-500">
             <a className="" href="https://www.freepik.com/free-vector/online-virtual-team-building-isometric-composition-with-male-worker-sitting-computer-table-with-coworker-avatars-illustration_17544091.htm#query=online%20mentorship&position=6&from_view=search&track=ais">
               Image by macrovector on Freepik
             </a>
           </p>
         </div>
       </div>
-      {/* </Paper> */}
     </div>
   );
 }

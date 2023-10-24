@@ -48,14 +48,14 @@ const ResponsiveAppBar = () => {
   return (
     <AppBar style={{ backgroundColor: '#fff', padding: "16px" }} position="fixed" elevation={0}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar>
           {/* desktop nav logo  */}
           <Typography
             variant="h5"
             noWrap
             component="a"
             href="/"
-            sx={{ mr: 2, color: '#1776D1', display: { xs: "none", md: "flex" }, fontWeight: 'bold' }}
+            sx={{ mr: 2, color: '#2464EB', display: { xs: "none", md: "flex" }, fontWeight: 'bold' }}
           >
             MentorSync
           </Typography>
@@ -68,7 +68,7 @@ const ResponsiveAppBar = () => {
             noWrap
             component="a"
             href="/"
-            sx={{ color: '#1776D1', display: { xs: "flex", md: "none" }, fontWeight: 'bold' }}
+            sx={{ color: '#2464EB', display: { xs: "flex", md: "none" }, fontWeight: 'bold' }}
           >
             MentorSync
           </Typography>
@@ -158,7 +158,7 @@ const ResponsiveAppBar = () => {
             {!loggedInUser ? guestMenuItems.map((page) => (
               <Link key={page.item} to={`${page.link}`} state={{ redirectTo: page.link === "/signin" ? pathname : null }}>
                 <Button
-                  sx={{ my: 2, color: "#1776D1", display: "block", fontWeight: 'bold' }}
+                  sx={{ my: 2, color: "#2464EB", display: "block", fontWeight: 'bold' }}
                 >
                   {page.item}
                 </Button>
@@ -167,7 +167,7 @@ const ResponsiveAppBar = () => {
               <Button
                 key={page.item}
                 onClick={() => navigate(`${page.link}`)}
-                sx={{ my: 2, color: "#1776D1", display: "block", fontWeight: 'bold' }}
+                sx={{ my: 2, color: "#2464EB", display: "block", fontWeight: 'bold' }}
               >
                 {page.item}
               </Button>
@@ -180,7 +180,7 @@ const ResponsiveAppBar = () => {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleClickProfileMenu}
-                sx={{ color: "#1776D1", display: "block" }}
+                sx={{ color: "#2464EB", display: "block" }}
               >
                 <AccountCircle fontSize="large" />
               </IconButton>

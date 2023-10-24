@@ -24,7 +24,7 @@ function FormInput({
 
   return (
     <>
-      <div className="ring-1 ring-stone-300 flex flex-row justify-between items-center">
+      <div className="ring-1 ring-stone-300 flex flex-row justify-between items-center font-generalSansRegular">
         {!isTextArea ? (
           <input
             className="p-3 bg-transparent w-full autofill:bg-transparent"

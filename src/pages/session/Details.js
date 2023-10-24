@@ -29,8 +29,8 @@ function SessionDetails() {
     fetchSession();
   }, [sessionId]);
   return (
-    <div className="p-2 xs:p-6 md:p-16 xl:px-40 2xl:px-60 flex mt-11 bg-[#F3F2EE] min-h-screen">
-      <Paper className="p-5 min-w-full flex flex-row items-center justify-center">
+    <div className="p-2 xs:p-6 md:p-16 xl:px-40 2xl:px-60 flex bg-[#F3F2EE] min-h-screen">
+      <Paper className="p-5 my-32 sm:my-28 min-w-full flex flex-row items-center justify-center">
         {loading ? (
           <CircularProgress />
         ) : (
@@ -42,41 +42,42 @@ function SessionDetails() {
             ) : (
               <div>
                 {session && (
-                <div className="flex flex-col w-full h-full items-center justify-center space-y-4 text-[70px] md:text-[100px] text-[#1776D1]">
+                <div className="flex flex-col w-full h-full items-center justify-center space-y-4 text-[70px] md:text-[100px] text-blue-600">
                   <CheckCircleOutlineOutlined fontSize="inherit" />
-                  <p className="text-lg md:text-2xl text-center font-semibold text-gray-500">{`Congratulations! You are scheduled for a session with ${session?.mentor?.firstname} ${session?.mentor?.lastname}.`}</p>
-                  <div className="w-full border-y py-2 flex flex-col space-y-3">
+                  <p className="text-lg md:text-2xl text-center font-generalSansMedium text-gray-500">{`Congratulations! You are scheduled for a session with ${session?.mentor?.firstname} ${session?.mentor?.lastname}.`}</p>
+                  <div className="w-full border-y py-2 flex flex-col space-y-6">
                     <div className="flex flex-col space-y-1 items-center text-gray-500 text-sm md:text-base">
                       <AccessTime color="inherit" />
-                      <p className="font-medium">30 min</p>
+                      <p className="font-generalSansRegular">30 min</p>
                     </div>
                     <div className="flex flex-col space-y-1 items-center text-gray-500 text-sm md:text-base">
                       <CalendarMonthOutlined color="inherit" />
-                      <p className="font-medium">{`${session?.time}, ${formatHumanReadableDate(session?.sessionDate)}`}</p>
+                      <p className="font-generalSansRegular">{`${session?.time}, ${formatHumanReadableDate(session?.sessionDate)}`}</p>
                     </div>
                     {session?.note && (
                     <div className="flex flex-col space-y-1 items-center text-gray-500 text-sm md:text-base">
                       <CommentOutlined color="inherit" />
-                      <p className="font-medium tex">{session?.note}</p>
+                      <p className="font-generalSansRegular text-center w-[60%]">{session?.note}</p>
                     </div>
                     )}
                   </div>
-                  <p className="text-sm md:text-base text-gray-500 font-light max-w-md text-center">
+                  <p className="text-sm md:text-base text-gray-500 font-generalSansMedium max-w-md text-center">
                     We have informed the mentor of your request. Please look out for their acceptance to confirm your session.
                   </p>
                   <div className="flex flex-col sm:flex-row md:space-x-3 w-full justify-center">
                     <Button
                       href="/"
                       className="md:w-[30%] text-white"
-                      style={{ marginTop: 30 }}
+                      style={{ marginTop: 30, padding: '10px' }}
                       type="button"
                       variant="contained"
+                      disableElevation
                     >
                       home
                     </Button>
                     <Button
                       className="md:w-[30%] text-white"
-                      style={{ marginTop: 30 }}
+                      style={{ marginTop: 30, padding: '10px' }}
                       type="button"
                       variant="outlined"
                     >
