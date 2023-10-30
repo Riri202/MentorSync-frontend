@@ -2,16 +2,15 @@ import {
   CheckOutlined,
   CloseOutlined,
   CommentOutlined,
+  LocalPhoneOutlined,
 } from '@mui/icons-material';
-// import { useState } from 'react';
-// import { Button } from '@mui/material';
-import { Paper } from '@mui/material';
+import { IconButton, Paper, Tooltip } from '@mui/material';
 import UserCard from '../../../components/UserCard';
 import { updateSessionStatus } from '../../../api/session';
 import { formatHumanReadableDateShort } from '../../../utils/date';
 import DialogModal from '../../../components/Dialog';
 
-function Session({ session, getSessionsForUser, hasDialogButtons = false }) {
+function Session({ session, getSessionsForUser, hasDialogButtons = false, isAccepted = false }) {
   return (
     <Paper sx={{ borderRadius: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
       <>
@@ -23,6 +22,16 @@ function Session({ session, getSessionsForUser, hasDialogButtons = false }) {
               session?.sessionDate
             )}`}
           </p>
+          {isAccepted && (
+          <div className="px-2">
+            <Tooltip title={`Start a call with ${session.mentee.firstname} ${session.mentee.lastname}`}>
+              <IconButton style={{ color: '#fff' }} href={`/call/${session._id}`}>
+                <LocalPhoneOutlined color="inherit" />
+              </IconButton>
+            </Tooltip>
+            {' '}
+          </div>
+          )}
         </div>
         <div className="w-full p-6 flex flex-col justify-start space-y-4">
           <UserCard profile={session.mentee} />

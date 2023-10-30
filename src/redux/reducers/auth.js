@@ -29,7 +29,8 @@ export default function (state = initialState, action) {
     case SIGNUP_SUCCESS:
       return {
         ...state,
-        isLoggedin: false,
+        isLoggedin: true,
+        user: payload.user,
       };
     case SIGNUP_FAILURE:
       return {

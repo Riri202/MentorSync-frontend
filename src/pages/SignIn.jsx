@@ -78,9 +78,9 @@ export default function SignInForm() {
             className="flex flex-col space-y-4 w-[80%]"
           >
             {errorText && (
-              <Alert variant="filled" severity="warning">
-                {errorText}
-              </Alert>
+            <Alert severity="error">
+              {errorText}
+            </Alert>
             )}
             <FormInput
               placeholder="Email"
@@ -104,6 +104,7 @@ export default function SignInForm() {
               type="submit"
               variant="contained"
               style={{ padding: '10px', color: '#fff' }}
+              disabled={loading}
             >
               {loading ? <CircularProgress color="inherit" /> : 'Sign In'}
             </Button>

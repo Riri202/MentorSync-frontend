@@ -18,3 +18,7 @@ export const signin = async (body) => {
   const { data } = await axios.post("/auth/signin", body);
   return data;
 };
+export const signup = async (body) => {
+  const { data } = await axios.post("/auth/signup", body);
+  return data;
+};
