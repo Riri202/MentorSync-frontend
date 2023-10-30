@@ -62,7 +62,7 @@ function Sessions({ profile, currentUser }) {
                           <CalendarMonth color="inherit" fontSize="inherit" />
                           <p className="font-generalSansRegular mt-[-3px]">{formatSessionDate(date)}</p>
                         </div>
-                        <div className="p-0 gap-3 lg:gap-10 grid grid-cols-1 lg:grid-cols-2 ml-10">
+                        <div className="p-0 gap-3 lg:gap-10 grid grid-cols-1 lg:grid-cols-2 mx-3 md:mx-10">
                           {sessions.pending[date].map((session) => (
                             <Session
                               key={session._id}
@@ -91,7 +91,7 @@ function Sessions({ profile, currentUser }) {
                           <CalendarMonth color="inherit" fontSize="inherit" />
                           <p className="font-generalSansRegular mt-[-3px]">{formatSessionDate(date)}</p>
                         </div>
-                        <div className="p-0 gap-3 lg:gap-10 grid grid-cols-1 lg:grid-cols-2 ml-10">
+                        <div className="p-0 gap-3 lg:gap-10 grid grid-cols-1 lg:grid-cols-2 mx-3 md:mx-10">
                           {sessions.accepted[date].map((session) => (
                             <Session key={session._id} session={session} isAccepted />
 
@@ -116,7 +116,7 @@ function Sessions({ profile, currentUser }) {
                           <CalendarMonth color="inherit" fontSize="inherit" />
                           <p className="font-generalSansRegular mt-[-3px]">{formatSessionDate(date)}</p>
                         </div>
-                        <div className="p-0 gap-3 lg:gap-10 grid grid-cols-1 lg:grid-cols-2 ml-10">
+                        <div className="p-0 gap-3 lg:gap-10 grid grid-cols-1 lg:grid-cols-2 mx-3 md:mx-10">
                           {sessions.rejected[date].map((session) => (
                             <Session key={session._id} session={session} />
 
@@ -141,7 +141,7 @@ function Sessions({ profile, currentUser }) {
                           <CalendarMonth color="inherit" fontSize="inherit" />
                           <p className="font-generalSansRegular mt-[-3px]">{formatSessionDate(date)}</p>
                         </div>
-                        <div className="p-0 gap-3 lg:gap-10 grid grid-cols-1 lg:grid-cols-2 ml-10">
+                        <div className="p-0 gap-3 lg:gap-10 grid grid-cols-1 lg:grid-cols-2 mx-3 md:mx-10">
                           {sessions.expired[date].map((session) => (
                             <Session key={session._id} session={session} />
 

@@ -161,9 +161,13 @@ export default function AllMentors() {
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-6xl font-generalSansMedium w-full text-center mb-6 bg-gradient-to-l from-blue-900 via-blue-600 to-blue-400 bg-clip-text text-transparent tracking-wide">Meet Our Inspiring Mentors</h2>
           <div className="grid grid-rows-1 gap-4">
-            {filteredMentors.map((mentor) => (
+            {filteredMentors.length ? filteredMentors.map((mentor) => (
               <MentorCard key={mentor._id} mentor={mentor} />
-            ))}
+            )) : (
+              <p className="text-center text-base md:text-xl font-generalSansRegular">
+                Oops, no match found! Please check your spelling and try again. Experiment with different terms or synonyms to expand your search.
+              </p>
+            )}
           </div>
         </>
       )}

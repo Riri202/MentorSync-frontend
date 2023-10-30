@@ -96,7 +96,7 @@ const Footer = () => (
         <p>
           Built by
           {' '}
-          <a href="www.linkedin.com/in/rita-maria-oladokun-346784194" className="text-[#2464EB] hover:underline">
+          <a href="https://www.linkedin.com/in/rita-maria-oladokun-346784194" target="_blank" className="text-[#2464EB] hover:underline" rel="noreferrer">
             Rita-Maria Oladokun
           </a>
         </p>

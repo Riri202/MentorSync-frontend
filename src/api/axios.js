@@ -1,7 +1,7 @@
 import axios from "axios";
 // import store from '../redux/store';
 
-axios.defaults.baseURL = process.env.REACT_API_URL || 'http://localhost:4000';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
 
 axios.interceptors.request.use(
   (config) => {
