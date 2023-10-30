@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/destructuring-assignment */
-import { AccessTime, ArrowBack } from '@mui/icons-material';
+import { ArrowBack } from '@mui/icons-material';
 import { Alert, CircularProgress, Paper } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
@@ -8,6 +8,7 @@ import format from 'date-fns/format';
 import { getMentorTimeSlots } from '../../api/session';
 import TimeslotButton from './components/TimeslotButton';
 import Calendar from './components/Calendar';
+import MentorDetails from './components/MentorDetails';
 
 function Session() {
   const [dateValue, setDateValue] = useState(new Date());
@@ -17,13 +18,11 @@ function Session() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const params = useParams();
+  const { mentorId } = useParams();
 
   const queryParams = new URLSearchParams(searchParams.toString());
   const sessionDate = queryParams.get('date');
   const sessionTime = queryParams.get('timeslot');
-
-  const { mentorId } = params;
 
   const handleSelectDate = (val) => {
     const formattedDate = format(new Date(val), 'yyyy-MM-dd');
@@ -87,7 +86,7 @@ function Session() {
   }, []);
 
   return (
-    <div className="p-2 xs:p-6 md:p-16 xl:px-40 2xl:px-60 flex mt-11 bg-[#F3F2EE] min-h-screen">
+    <div className="p-2 xs:p-6 md:p-16 xl:px-40 2xl:px-60 flex mt-32 sm:mt-28 bg-[#F3F2EE] min-h-screen">
       <Paper className="sm:p-5 grid xl:grid-cols-6 min-w-full">
         <div className="col-span-1 xl:col-span-2 xl:border-r h-full px-6 flex flex-col space-y-8">
           {isMobile && (
@@ -95,14 +94,7 @@ function Session() {
               <ArrowBack onClick={goBack} color="primary" />
             </button>
           )}
-          <div>
-            <p className="text-gray-500 font-semibold xl:mt-12">Rita Oladokun</p>
-            <p className="text-2xl font-semibold">30 Minute Session</p>
-          </div>
-          <div className="flex flex-row space-x-2 items-center text-gray-500">
-            <AccessTime color="inherit" />
-            <p>30 min</p>
-          </div>
+          <MentorDetails mentorId={mentorId} />
         </div>
         <div className="col-span-1 border-t mt-4 xl:border-t-0 xl:col-span-4 p-1 sm:px-6">
           {isMobile ? (

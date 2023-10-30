@@ -12,7 +12,7 @@ function a11yProps(index) {
 
 export default function BasicTabs({ tabs, currentTab, handleTabChange }) {
   return (
-    <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: 2 }}>
+    <Box className="regular-font" sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: 2 }}>
       <Tabs
         variant="scrollable"
         value={currentTab}

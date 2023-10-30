@@ -29,10 +29,6 @@ function Reviews({ currentUser, profile }) {
 
   return (
     <SectionCard>
-      <p className="font-light text-gray-500 mb-2">
-        Bio This will allow you to bring Twilio’s public or private network connectivity closer to your
-        applications for improved performance.
-      </p>
       {currentUser && currentUser.role === USER_ROLE && currentUser.id === profile?._id && <SessionReviewModal getReviews={getReviews} />}
       <div className="w-full flex-row flex justify-center mt-4">
         {loading ? <CircularProgress /> : errorText ? <Alert severity="error">{errorText}</Alert> : (

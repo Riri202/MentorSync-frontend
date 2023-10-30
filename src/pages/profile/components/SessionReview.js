@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-useless-return */
 /* eslint-disable no-nested-ternary */
-import { Add } from '@mui/icons-material';
+import { Add, Star, StarOutline } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import { Alert, Button, CircularProgress, Paper, Rating } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -57,15 +57,17 @@ const SessionItem = ({ session, loading, getSessionsToReview, getReviews }) => {
       <Paper
         key={session._id}
         sx={{
-          width: '80%',
+          width: '100%',
           borderRadius: '20px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
+          border: '1px solid #E0DFDB',
         }}
+        elevation={0}
       >
         <>
-          <div className="text-white bg-[#1776D1] h-[20%] p-3 md:p-6 rounded-t-[20px] flex flex-row items-center text-xs sm:text-sm md:text-base">
+          <div className="text-white font-generalSansRegular bg-gradient-to-r from-blue-800 via-blue-600 to-blue-400 h-[20%] p-3 md:p-6 rounded-t-[20px] flex flex-row items-center text-xs sm:text-sm md:text-base">
             <p className="">
               {`${formatHumanReadableDateShort(
                 // eslint-disable-next-line comma-dangle
@@ -73,14 +75,16 @@ const SessionItem = ({ session, loading, getSessionsToReview, getReviews }) => {
               )}`}
             </p>
           </div>
-          <div className="w-full p-6 flex flex-col justify-start space-y-4">
+          <div className="w-full p-3 md:p-6 flex flex-col justify-start space-y-4">
             <UserCard profile={session.mentor} />
           </div>
         </>
-        <form className="p-6" onSubmit={handleSubmit(submitReview)}>
+        <form className="p-3 md:p-6" onSubmit={handleSubmit(submitReview)}>
           <Rating
             name="rating"
             error={errors.rating}
+            icon={<Star style={{ width: "28px", height: "28px" }} />}
+            emptyIcon={<StarOutline style={{ width: "28px", height: "28px" }} />}
             onChange={(event, newValue) => {
               setValue(`rating`, newValue);
               clearErrors('rating');
@@ -111,8 +115,8 @@ const SessionItem = ({ session, loading, getSessionsToReview, getReviews }) => {
           />
           {errorText && (
           <Alert severity="error">{errorText}</Alert>)}
-          <div className="flex flex-row justify-end mt-4">
-            <Button disabled={loading || isSubmitting || !isDirty} type="submit" variant="contained">
+          <div className="flex flex-row justify-end mt-4 w-full">
+            <Button sx={{ padding: '10px', width: { xs: '100%', md: '40%' } }} disableElevation disabled={loading || isSubmitting || !isDirty} type="submit" variant="contained">
               {(loading || isSubmitting) && (
               <CircularProgress size={12} style={{ marginRight: 10 }} />
               )}
@@ -145,8 +149,8 @@ function SessionReview({ getReviews }) {
   }, []);
   return (
     <DialogModal
-      title="This is a list of your expired sessions"
-      btnText="Give a review"
+      title="This is a list of your expired sessions awaiting review"
+      btnText="Review expired sessions"
       btnVariant="outlined"
       btnIcon={<Add />}
       btnStyle=""

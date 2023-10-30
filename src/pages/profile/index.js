@@ -45,7 +45,7 @@ function Profile() {
   };
 
   return (
-    <div className="p-2 xs:p-6 md:p-16 xl:px-40 2xl:px-60  flex flex-col space-y-4 relative py-20 mt-11 bg-[#F3F2EE] min-h-screen">
+    <div className="p-2 xs:p-6 md:p-16 xl:px-40 2xl:px-60 flex flex-col space-y-4 relative py-20 mt-32 sm:mt-28 bg-[#F3F2EE] min-h-screen">
       <Info loading={loading} errorText={errorText} profile={profile} />
       <BasicTabs currentTab={currentTab} handleTabChange={handleTabChange} tabs={tabs} />
       {currentUser && currentUser?.id === profile?._id && (

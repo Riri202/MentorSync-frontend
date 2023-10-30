@@ -1,15 +1,13 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import { useEffect, useState } from 'react';
 import { Alert, CircularProgress } from '@mui/material';
+import { CalendarMonth } from '@mui/icons-material';
 import { getSessions } from '../../../api/session';
 import SectionCard from './SectionCard';
 import BasicTabs from '../../../components/Tabs';
 import TabPanel from '../../../components/TabPanel';
-import {
-  SESSION_STATUS_ACCEPTED,
-  SESSION_STATUS_PENDING,
-  SESSION_STATUS_REJECTED,
-} from '../../../utils/constants';
 import Session from './Session';
+import { formatSessionDate } from '../../../utils/date';
 
 function Sessions({ profile, currentUser }) {
   const [sessions, setSessions] = useState();
@@ -35,6 +33,7 @@ function Sessions({ profile, currentUser }) {
   const handleTabChange = (event, newTab) => {
     setCurrentTab(newTab);
   };
+
   return (
     <SectionCard>
       {loading ? (
@@ -43,7 +42,7 @@ function Sessions({ profile, currentUser }) {
         <>
           {errorText ? (
             <Alert severity="error">{errorText}</Alert>
-          ) : (
+          ) : sessions && (
             <>
               <BasicTabs
                 currentTab={currentTab}
@@ -53,79 +52,103 @@ function Sessions({ profile, currentUser }) {
               <TabPanel
                 value={currentTab}
                 index={0}
-                className="p-0 gap-3 lg:gap-10 grid grid-cols-1 lg:grid-cols-2"
+                className="max-h-[400px] md:max-h-[500px] overflow-y-scroll flex flex-col space-y-4"
               >
-                {sessions?.nonExpiredSessions?.filter(
-                  (session) => session.status === SESSION_STATUS_PENDING,
-                ).length ? (
-                    sessions?.nonExpiredSessions
-                      ?.filter(
-                        (session) => session.status === SESSION_STATUS_PENDING,
-                      )
-                      .map((session) => (
-                        <Session
-                          key={session._id}
-                          session={session}
-                          getSessionsForUser={getSessionsForUser}
-                          hasDialogButtons={session.mentor._id === currentUser.id}
-                        />
-                      ))
-                  ) : (
-                    <p>No sessions to display</p>
-                  )}
+                {Object.keys(sessions.pending).length ? (
+                  Object.keys(sessions.pending)
+                    .map((date) => (
+                      <div>
+                        <div className="flex flex-row space-x-2 text-2xl items-start text-gray-500">
+                          <CalendarMonth color="inherit" fontSize="inherit" />
+                          <p className="font-generalSansRegular mt-[-3px]">{formatSessionDate(date)}</p>
+                        </div>
+                        <div className="p-0 gap-3 lg:gap-10 grid grid-cols-1 lg:grid-cols-2 mx-3 md:mx-10">
+                          {sessions.pending[date].map((session) => (
+                            <Session
+                              key={session._id}
+                              session={session}
+                              getSessionsForUser={getSessionsForUser}
+                              hasDialogButtons={session.mentor._id === currentUser.id}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    ))
+                ) : (
+                  <p>No sessions to display</p>
+                )}
               </TabPanel>
               <TabPanel
                 value={currentTab}
                 index={1}
-                className="p-0 flex flex-col space-y-2"
+                className="max-h-[400px] md:max-h-[500px] overflow-y-scroll flex flex-col space-y-4"
               >
-                {sessions?.nonExpiredSessions?.filter(
-                  (session) => session.status === SESSION_STATUS_ACCEPTED
-                    && !sessions?.expiredSessions
-                      ?.map((item) => item._id)
-                      .includes(session._id),
-                ).length ? (
-                    sessions?.nonExpiredSessions
-                      ?.filter(
-                        (session) => session.status === SESSION_STATUS_ACCEPTED && !sessions?.expiredSessions
-                          ?.map((item) => item._id)
-                          .includes(session._id),
-                      )
-                      .map((session) => (
-                        <Session key={session._id} session={session} isAccepted />
-                      ))
-                  ) : (
-                    <p>No sessions to display</p>
-                  )}
+                {Object.keys(sessions.accepted).length ? (
+                  Object.keys(sessions.accepted)
+                    .map((date) => (
+                      <div>
+                        <div className="flex flex-row space-x-2 text-2xl items-start text-gray-500">
+                          <CalendarMonth color="inherit" fontSize="inherit" />
+                          <p className="font-generalSansRegular mt-[-3px]">{formatSessionDate(date)}</p>
+                        </div>
+                        <div className="p-0 gap-3 lg:gap-10 grid grid-cols-1 lg:grid-cols-2 mx-3 md:mx-10">
+                          {sessions.accepted[date].map((session) => (
+                            <Session key={session._id} session={session} isAccepted />
+
+                          ))}
+                        </div>
+                      </div>
+                    ))
+                ) : (
+                  <p>No sessions to display</p>
+                )}
               </TabPanel>
               <TabPanel
                 value={currentTab}
                 index={2}
-                className="p-0 flex flex-col space-y-2"
+                className="max-h-[400px] md:max-h-[500px] overflow-y-scroll flex flex-col space-y-4"
               >
-                {sessions?.nonExpiredSessions?.filter(
-                  (session) => session.status === SESSION_STATUS_REJECTED,
-                ).length ? (
-                    sessions?.nonExpiredSessions
-                      ?.filter(
-                        (session) => session.status === SESSION_STATUS_REJECTED,
-                      )
-                      .map((session) => (
-                        <Session key={session._id} session={session} />
-                      ))
-                  ) : (
-                    <p>No sessions to display</p>
-                  )}
+                {Object.keys(sessions.rejected).length ? (
+                  Object.keys(sessions.rejected)
+                    .map((date) => (
+                      <div>
+                        <div className="flex flex-row space-x-2 text-2xl items-start text-gray-500">
+                          <CalendarMonth color="inherit" fontSize="inherit" />
+                          <p className="font-generalSansRegular mt-[-3px]">{formatSessionDate(date)}</p>
+                        </div>
+                        <div className="p-0 gap-3 lg:gap-10 grid grid-cols-1 lg:grid-cols-2 mx-3 md:mx-10">
+                          {sessions.rejected[date].map((session) => (
+                            <Session key={session._id} session={session} />
+
+                          ))}
+                        </div>
+                      </div>
+                    ))
+                ) : (
+                  <p>No sessions to display</p>
+                )}
               </TabPanel>
               <TabPanel
                 value={currentTab}
                 index={3}
-                className="p-0 flex flex-col space-y-2"
+                className="max-h-[400px] md:max-h-[500px] overflow-y-scroll flex flex-col space-y-4"
               >
-                {sessions?.expiredSessions?.length ? (
-                  sessions?.expiredSessions?.map((session) => (
-                    <Session key={session._id} session={session} />
-                  ))
+                {Object.keys(sessions.expired).length ? (
+                  Object.keys(sessions.expired)
+                    .map((date) => (
+                      <div>
+                        <div className="flex flex-row space-x-2 text-2xl items-start text-gray-500">
+                          <CalendarMonth color="inherit" fontSize="inherit" />
+                          <p className="font-generalSansRegular mt-[-3px]">{formatSessionDate(date)}</p>
+                        </div>
+                        <div className="p-0 gap-3 lg:gap-10 grid grid-cols-1 lg:grid-cols-2 mx-3 md:mx-10">
+                          {sessions.expired[date].map((session) => (
+                            <Session key={session._id} session={session} />
+
+                          ))}
+                        </div>
+                      </div>
+                    ))
                 ) : (
                   <p>No sessions to display</p>
                 )}
