@@ -37,7 +37,7 @@ function Hero() {
                 d="M17 8l4 4m0 0l-4 4m4-4H3"
               />
             </svg>
-)}
+          )}
         />
       </div>
       <div className="w-full md:pt-0 lg:w-1/2 relative">
@@ -46,7 +46,14 @@ function Hero() {
           alt="hero illustration"
         />
         <p className="absolute bottom-1 pl-3 text-[8px] flex justify-center items-center font-generalSansLight text-gray-500 hover:text-blue-600 hover:underline">
-          <a href="https://www.freepik.com/free-vector/online-tutorials-concept_7915212.htm#query=online%20education&position=12&from_view=keyword&track=ais">Image by pikisuperstar on Freepik</a>
+          <a
+            href="https://www.freepik.com/free-vector/online-tutorials-concept_7915212.htm#query=online%20education&position=12&from_view=keyword&track=ais"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Image by pikisuperstar on Freepik
+
+          </a>
         </p>
       </div>
     </div>

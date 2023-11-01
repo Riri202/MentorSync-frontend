@@ -17,13 +17,9 @@ export default function SignInForm() {
   const validationSchema = yup.object().shape({
     email: yup
       .string()
-      .matches(
-        /^\S+@\S+$/i,
-      )
+      .matches(/^\S+@\S+$/i)
       .required(fillInMessage),
-    password: yup
-      .string()
-      .required(fillInMessage),
+    password: yup.string().required(fillInMessage),
   });
 
   const {
@@ -59,10 +55,17 @@ export default function SignInForm() {
       <div className="flex flex-col-reverse lg:flex-row-reverse">
         <div className="lg:pl-3 w-full lg:w-1/2 flex flex-col justify-center items-center">
           <div className="flex flex-col space-y-3 justify-center items-center mb-10">
-            <h2 className="text-5xl font-generalSansSemiBold tracking-wide text-center lg:text-left bg-gradient-to-l from-blue-800 via-blue-600 to-blue-400 bg-clip-text text-transparent ">Welcome Back!</h2>
+            <h2 className="text-5xl font-generalSansSemiBold tracking-wide text-center lg:text-left bg-gradient-to-l from-blue-800 via-blue-600 to-blue-400 bg-clip-text text-transparent ">
+              Welcome Back!
+            </h2>
             <p className="font-generalSansRegular text-gray-500">
               Don&apos;t have an account?
-              <Link to="/Signup" state={{ redirectTo: state?.redirectTo ? state?.redirectTo : '/' }}>
+              <Link
+                to="/Signup"
+                state={{
+                  redirectTo: state?.redirectTo ? state?.redirectTo : '/',
+                }}
+              >
                 <button
                   className="text-green-500 ml-2 cursor-pointer underline"
                   type="button"
@@ -77,11 +80,7 @@ export default function SignInForm() {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col space-y-4 w-full"
           >
-            {errorText && (
-            <Alert severity="error">
-              {errorText}
-            </Alert>
-            )}
+            {errorText && <Alert severity="error">{errorText}</Alert>}
             <FormInput
               placeholder="Email"
               name="email"
@@ -101,7 +100,11 @@ export default function SignInForm() {
               type="password"
             />
             <Button type="submit">
-              {loading ? <CircularProgress size={25} color="inherit" /> : <span>Sign In</span>}
+              {loading ? (
+                <CircularProgress size={25} color="inherit" />
+              ) : (
+                <span>Sign In</span>
+              )}
             </Button>
           </form>
         </div>
@@ -113,7 +116,12 @@ export default function SignInForm() {
             alt="people meeting online"
           />
           <p className="absolute bottom-10 pl-3 text-xs flex justify-center items-center font-generalSansExtralight text-gray-500">
-            <a className="" href="https://www.freepik.com/free-vector/online-virtual-team-building-isometric-composition-with-male-worker-sitting-computer-table-with-coworker-avatars-illustration_17544091.htm#query=online%20mentorship&position=6&from_view=search&track=ais">
+            <a
+              className=""
+              href="https://www.freepik.com/free-vector/online-virtual-team-building-isometric-composition-with-male-worker-sitting-computer-table-with-coworker-avatars-illustration_17544091.htm#query=online%20mentorship&position=6&from_view=search&track=ais"
+              rel="noreferrer"
+              target="_blank"
+            >
               Image by macrovector on Freepik
             </a>
           </p>
