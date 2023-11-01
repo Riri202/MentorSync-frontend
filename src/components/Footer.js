@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => (
   <footer className="p-10 bg-gray-900 flex flex-col items-center">
@@ -8,9 +9,9 @@ const Footer = () => (
         Make Your Next Career Move!
       </strong>
 
-      <a
+      <Link
         className="flex items-center gap-4 lg:gap-2 rounded-full border border-white bg-white px-8 py-3 text-blue-800 hover:bg-transparent hover:text-white focus:outline-none focus:ring active:bg-white/90"
-        href="/mentors/all"
+        to="/mentors/all"
       >
         <span className="text-sm whitespace-nowrap"> Let&apos;s Get Started </span>
 
@@ -28,26 +29,26 @@ const Footer = () => (
             d="M17 8l4 4m0 0l-4 4m4-4H3"
           />
         </svg>
-      </a>
+      </Link>
     </div>
     <div className=" flex flex-col justify-center items-center space-y-3 text-gray-400 text-xs sm:text-sm md:text-base">
       <nav className="grid grid-flow-col gap-4 font-generalSansRegular">
-        <a href="/about" className="link link-hover">
+        <Link to="/about">
           About us
-        </a>
-        <a href="/about" className="link link-hover">
+        </Link>
+        <Link to="/about">
           Contact
-        </a>
-        <a href="/about" className="link link-hover">
+        </Link>
+        <Link to="/about">
           Jobs
-        </a>
-        <a href="/about" className="link link-hover">
+        </Link>
+        <Link to="/about">
           Press kit
-        </a>
+        </Link>
       </nav>
       <nav>
         <div className="grid grid-flow-col gap-4">
-          <a href="/about">
+          <a href="https://twitter.com/greatbigriri" target="_blank" rel="noreferrer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -59,7 +60,7 @@ const Footer = () => (
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
             </svg>
           </a>
-          <a href="/about">
+          <a href="https://www.youtube.com/channel/UCzkrQU6VvxAti16TwmXrLwQ" target="_blank" rel="noreferrer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -71,7 +72,7 @@ const Footer = () => (
               <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
             </svg>
           </a>
-          <a href="/about">
+          <a href="https://twitter.com/greatbigriri" target="_blank" rel="noreferrer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

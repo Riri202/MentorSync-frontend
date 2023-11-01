@@ -7,6 +7,7 @@ import {
 } from '@mui/icons-material';
 import { IconButton, Paper, Tooltip } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import UserCard from '../../../components/UserCard';
 import { updateSessionStatus } from '../../../api/session';
 import { formatHumanReadableDateShort } from '../../../utils/date';
@@ -50,9 +51,11 @@ function Session({ session, getSessionsForUser, hasDialogButtons = false, isAcce
           {isAccepted && (
           <div className="px-2">
             <Tooltip title={`Start a call with ${session.mentee.firstname} ${session.mentee.lastname}`}>
-              <IconButton style={{ color: '#fff' }} href={`/call/${session._id}`}>
-                <LocalPhoneOutlined color="inherit" />
-              </IconButton>
+              <Link to={`/call/${session._id}`}>
+                <IconButton style={{ color: '#fff' }}>
+                  <LocalPhoneOutlined color="inherit" />
+                </IconButton>
+              </Link>
             </Tooltip>
             {' '}
           </div>

@@ -3,7 +3,7 @@ import { Alert, CircularProgress, Button, CardActions } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import { ArrowForwardIosOutlined } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getMentors } from "../../../api";
 import FillerImage from '../../../assets/images/signup-sync.jpg';
 
@@ -56,7 +56,6 @@ function Mentors() {
                         height="40%"
                         image={mentor.img || FillerImage}
                         alt="mentor image"
-                        href={`/users/${mentor._id}`}
                       />
                       <div className="flex-grow p-3 grid grid-rows-2">
                         <p className="text-lg md:text-xl row-span-1 font-generalSansMedium">
@@ -69,29 +68,30 @@ function Mentors() {
                         </div>
                       </div>
                       <CardActions>
-                        <Button
-                          href={`/users/${mentor._id}`}
-                          size="large"
-                          color="primary"
-                          endIcon={(
-                            <svg
-                              className="h-5 w-5 rtl:rotate-180"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                              />
-                            </svg>
+                        <Link to={`/users/${mentor._id}`}>
+                          <Button
+                            size="large"
+                            color="primary"
+                            endIcon={(
+                              <svg
+                                className="h-5 w-5 rtl:rotate-180"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                />
+                              </svg>
 )}
-                        >
-                          View Profile
-                        </Button>
+                          >
+                            View Profile
+                          </Button>
+                        </Link>
                       </CardActions>
                     </Card>
                   </div>

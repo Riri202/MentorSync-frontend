@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AccessTime, CalendarMonthOutlined, CheckCircleOutlineOutlined, CommentOutlined } from '@mui/icons-material';
 import { Alert, Button, CircularProgress, Paper } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getSession } from '../../api/session';
 import { formatHumanReadableDate } from '../../utils/date';
 
@@ -65,16 +65,17 @@ function SessionDetails() {
                     We have informed the mentor of your request. Please look out for their acceptance to confirm your session.
                   </p>
                   <div className="flex flex-col sm:flex-row md:space-x-3 w-full justify-center">
-                    <Button
-                      href="/"
-                      className="md:w-[30%] text-white"
-                      style={{ marginTop: 30, padding: '10px' }}
-                      type="button"
-                      variant="contained"
-                      disableElevation
-                    >
-                      home
-                    </Button>
+                    <Link to="/">
+                      <Button
+                        className="md:w-[30%] text-white"
+                        style={{ marginTop: 30, padding: '10px' }}
+                        type="button"
+                        variant="contained"
+                        disableElevation
+                      >
+                        home
+                      </Button>
+                    </Link>
                     <Button
                       className="md:w-[30%] text-white"
                       style={{ marginTop: 30, padding: '10px' }}
