@@ -15,9 +15,9 @@ import { Avatar, Divider, ListItemIcon, ListItemText } from "@mui/material";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import { useSignOut } from "../hooks/useSignOut";
 
-const guestMenuItems = [{ item: "Home", link: '/' }, 
+const guestMenuItems = [{ item: "Home", link: '/' },
   // { item: "About Us", link: '/about' },
-   { item: "Sign In", link: '/signin' }];
+  { item: "Sign In", link: '/signin' }];
 const loggedInUserMenuItems = guestMenuItems.slice(0, 2);
 
 const ResponsiveAppBar = () => {

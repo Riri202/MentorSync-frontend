@@ -7,7 +7,7 @@ import Button from "../../../components/Button";
 
 function Hero() {
   const navigate = useNavigate();
-  
+
   return (
     <div className="flex flex-col-reverse justify-evenly lg:flex-row lg:justify-center lg:items-center p-6 md:p-20 md:mt-6 lg:mt-0 bg-[#edeef1] min-h-screen">
       <div className="mt-[-50px] md:mt-[40px] lg:mt-0 flex flex-col space-y-6 md:space-y-10 text-left justify-center w-full lg:w-1/2">
